@@ -88,20 +88,19 @@ public class LinkedList {
      * @return true if the lists have the same elements in the same order, false otherwise
      */
     public boolean isEqual(LinkedList list2) {
-        if (_size != list2._size){
+        if (_size != list2._size) {
             return false;
         }
         Node a = _head;
         Node b = list2._head;
-        while (a != null){
-            if (a.getValue() != b.getValue()){
+        while (a != null) {
+            if (a.getValue() != b.getValue()) {
                 return false;
             }
             a = a.getNext();
             b = b.getNext();
         }
-
-        return false;    // Change this statement as required
+        return true;
     }
 
     /**
@@ -166,16 +165,16 @@ public class LinkedList {
      * @param list2 - list to interleave into the current list
      */
     public void merge(LinkedList list2) {
-        if (list2._size == 0){
+        if (list2._size == 0) {
             return;
         }
         Node a = _head;
         Node b = list2._head;
-        while (b != null){
+        while (b != null) {
             Node aNext = a.getNext();
             Node bNext = b.getNext();
             b.setNext(a);
-            if (bNext != null){
+            if (bNext != null) {
                 a.setNext(bNext);
             }
             a = aNext;
@@ -183,6 +182,7 @@ public class LinkedList {
         }
         _head = list2._head;
         _size += list2._size;
+        list2.clear();
     }
 
 
