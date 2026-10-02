@@ -22,7 +22,17 @@ public class LinkedList {
      * @param list2 - list to be merged
      */
     public void simpleMerge(LinkedList list2) {
-        //TODO
+        if (list2._size == 0){
+            return;
+        }
+        if (_size == 0){
+            _tail = list2._tail;
+        } else {
+            list2._tail.setNext(_head);
+        }
+        _head = list2._head;
+        _size += list2._size;
+        list2.clear();
     }
 
     /**
@@ -39,8 +49,26 @@ public class LinkedList {
      * @param i    - index of node to remove
      */
     public void removeAtIndex(int i) {
-        // TODO
-
+        if (i < 0 || i >= _size){
+            throw new IndexOutOfBoundsException();
+        }
+        if (i == 0){
+            _head = _head.getNext();
+            if(_head == null){
+                _tail = null;
+            }
+        } else {
+            Node prev = _head;
+            for (int k = 0; k < i - 1; k++){
+                prev = prev.getNext();
+            }
+            Node target = prev.getNext();
+            prev.setNext(target.getNext());
+            if (target == _tail){
+                _tail = prev;
+            }
+        }
+        _size--;
     }
 
     /**
@@ -60,7 +88,18 @@ public class LinkedList {
      * @return true if the lists have the same elements in the same order, false otherwise
      */
     public boolean isEqual(LinkedList list2) {
-        // TODO
+        if (_size != list2._size){
+            return false;
+        }
+        Node a = _head;
+        Node b = list2._head;
+        while (a != null){
+            if (a.getValue() != b.getValue()){
+                return false;
+            }
+            a = a.getNext();
+            b = b.getNext();
+        }
 
         return false;    // Change this statement as required
     }
@@ -73,8 +112,19 @@ public class LinkedList {
      *
      */
     public void removeRepeats() {
-        // TODO
-
+        if (_head == null){
+            return;
+        }
+        Node current = _head;
+        while (current.getNext() != null){
+            if (current.getValue() == current.getNext().getValue()){
+                current.setNext(current.getNext().getNext());
+                _size--;
+            } else{
+                current = current.getNext();
+            }
+        }
+        _tail = current;
     }
 
      /**
@@ -84,7 +134,16 @@ public class LinkedList {
      * list after reverse: 7 -> 8 -> 9 -> 10
      */
     public void reverse() {
-        // TODO
+        Node prev = null;
+        Node current = _head;
+        _tail = _head;
+        while(current != null){
+            Node next = current.getNext();
+            current.setNext(prev);
+            prev = current;
+            current = next;
+        }
+        _head = prev;
     }
 
     /**
@@ -107,7 +166,23 @@ public class LinkedList {
      * @param list2 - list to interleave into the current list
      */
     public void merge(LinkedList list2) {
-        // TODO
+        if (list2._size == 0){
+            return;
+        }
+        Node a = _head;
+        Node b = list2._head;
+        while (b != null){
+            Node aNext = a.getNext();
+            Node bNext = b.getNext();
+            b.setNext(a);
+            if (bNext != null){
+                a.setNext(bNext);
+            }
+            a = aNext;
+            b = bNext;
+        }
+        _head = list2._head;
+        _size += list2._size;
     }
 
 
